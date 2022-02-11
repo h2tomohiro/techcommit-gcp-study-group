@@ -17,7 +17,7 @@ class GoogleEventCalendar
     # 認証
     @client.authorization = authorize
     # 利用するカレンダーのIDを設定
-    @calendar_id = GOOGLE_CALENDAR_ID
+    @google_calendar_id = GOOGLE_CALENDAR_ID
   end
 
   def authorize
@@ -68,14 +68,14 @@ class GoogleEventCalendar
     )
     # Googleカレンダーに、イベント作成のリクエスト
     response =  @client.insert_event(
-      @calendar_id,  # calendarID
+      @google_calendar_id,  # calendarID
       event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
     )
   end
 
   def read
     # 2022年の2月1日から3月31日までの予定を取得
-    events = @client.list_events(@calendar_id,
+    events = @client.list_events(@google_calendar_id,
                                   time_min: (Time.new(2022, 2, 1)).iso8601,
                                   time_max: (Time.new(2022, 3, 31)).iso8601,
                                   )
@@ -96,7 +96,7 @@ class GoogleEventCalendar
     )
     # Googleカレンダーに、イベント更新のリクエスト
     response =  @client.update_event(
-      @calendar_id,  # calendarID
+      @google_calendar_id,  # calendarID
       event_id, # 編集したいeventのID
       event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
     )
@@ -105,7 +105,7 @@ class GoogleEventCalendar
   # 指定したイベントを削除
   def delete(event_id)
     @client.delete_event(
-      @calendar_id,
+      @google_calendar_id,
       event_id
     )
   end
