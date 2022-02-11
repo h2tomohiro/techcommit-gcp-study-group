@@ -3,9 +3,9 @@ require "googleauth"
 require "googleauth/stores/file_token_store"
 require "fileutils"
 
-APPLICATION_NAME = 'techcommit-gcp-study-group'
-MY_CALENDAR_ID = 'h2.adachi.tomohiro@gmail.com'
-CLIENT_SECRET_PATH = 'techcommit-gcp-study-group-968cd712c90a.json'
+APPLICATION_NAME = 'xxxxxxxxxxxxxxxxxxxx' # ご自身で作成したサービスアカウント名を設定してください
+GOOGLE_CALENDAR_ID = 'xxxxxxxxxxxxxxxxxxxx' # ご自身のカレンダーIDを設定してください
+CLIENT_SECRET_PATH = 'xxxxxxxxxxxxxxxxxxxx.json' # ご自身で作成したprivate_keyをディレクトリ内に配置し、pathを設定してください
 TIME_ZONE = 'Japan'
 
 class GoogleEventCalendar
@@ -17,7 +17,7 @@ class GoogleEventCalendar
     # 認証
     @client.authorization = authorize
     # 利用するカレンダーのIDを設定
-    @calendar_id = MY_CALENDAR_ID
+    @calendar_id = GOOGLE_CALENDAR_ID
   end
 
   def authorize
@@ -47,6 +47,16 @@ class GoogleEventCalendar
     )
   end
 
+  #レスポンスとして受け取るEventをコンソールに表示
+  def puts_event(event)
+    puts "Summary:     #{event.summary}"
+    puts "Location:    #{event.location}"
+    puts "Description: #{event.description}"
+    puts "EventID:     #{event.id}"
+    puts "Start:       #{event.start.date_time}"
+    puts "End:         #{event.end.date_time}"
+  end
+
   def create
     # 登録したいイベントをbuild
     event = build_google_calender_event(
@@ -56,21 +66,11 @@ class GoogleEventCalendar
       DateTime.new(2022, 2, 13, 16), # start_time（開始時間）
       DateTime.new(2022, 2, 13, 18) # end_time（終了時間）
     )
-
     # Googleカレンダーに、イベント作成のリクエスト
     response =  @client.insert_event(
       @calendar_id,  # calendarID
       event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
     )
-  end
-
-  #レスポンスとして受け取るEventをコンソールに表示
-  def puts_event(event)
-    puts "Summary:  #{event.summary}"
-    puts "Location: #{event.location}"
-    puts "ID:       #{event.id}"
-    puts "Start:    #{event.start.date_time}"
-    puts "End:      #{event.end.date_time}"
   end
 
   def read
@@ -111,4 +111,10 @@ class GoogleEventCalendar
   end
 end
 
+# 更新したいEventIDを設定してください。EventIDはreadメソッドを呼ぶと確認できます。
+event_id = 'xxxxxxxxxxxxxxxxxxxx'
+
 GoogleEventCalendar.new.create
+# GoogleEventCalendar.new.update(event_id)
+# GoogleEventCalendar.new.delete(event_id)
+# GoogleEventCalendar.new.read
