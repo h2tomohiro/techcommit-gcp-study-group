@@ -86,7 +86,7 @@ class GoogleEventCalendar
   end
 
   # 指定したイベントを更新
-  def update(event_id)
+  def update(google_event_id)
     event = build_google_calender_event(
       'GoogleCloudAPI入門勉強会', # summary(タイトル)
       'WebAPIでGoogleカレンダーを操作してみよう！', # description(説明文),
@@ -97,24 +97,24 @@ class GoogleEventCalendar
     # Googleカレンダーに、イベント更新のリクエスト
     response =  @client.update_event(
       @google_calendar_id,  # calendarID
-      event_id, # 編集したいeventのID
+      google_event_id, # 編集したいeventのID
       event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
     )
   end
 
   # 指定したイベントを削除
-  def delete(event_id)
+  def delete(google_event_id)
     @client.delete_event(
       @google_calendar_id,
-      event_id
+      google_event_id
     )
   end
 end
 
 # 更新したいEventIDを設定してください。EventIDはreadメソッドを呼ぶと確認できます。
-event_id = 'xxxxxxxxxxxxxxxxxxxx'
+google_event_id = 'xxxxxxxxxxxxxxxxxxxx'
 
 GoogleEventCalendar.new.create
-# GoogleEventCalendar.new.update(event_id)
-# GoogleEventCalendar.new.delete(event_id)
+# GoogleEventCalendar.new.update(google_event_id)
+# GoogleEventCalendar.new.delete(google_event_id)
 # GoogleEventCalendar.new.read
