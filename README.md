@@ -1,9 +1,13 @@
 # Google Calendar APIでイベントの操作を行うサンプルコード
+## 1. サービスアカウントの作成
+- サービスアカウントを作成し、認証用の鍵をJSONでダウンロードしておいてください
+- https://support.google.com/a/answer/7378726?hl=ja
+
 ## 1. 上記コードはRubyで書かれているため、Rubyの開発環境が必要
 - 他の言語で実行したい方は、下記公式APIのQuickstartで言語を選択し、サンプルコードをお使いください。
   - https://developers.google.com/calendar/api/quickstart/js
 
-## 2. GoogleAPIを使うためににAPIクライアントをインストール
+## 2. GoogleAPIを使うためにAPIクライアントをインストール
 - Rubyをお使いいただく方は、以下のコマンドをコンソール上で実行してライブラリをインストールしてください。
   - `gem install google-api-client`
 - 他言語をお使いの方は、下記から `google-api-client` で検索して該当の言語のライブラリをお探しください。
