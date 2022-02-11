@@ -23,7 +23,7 @@ class GoogleEventCalendar
   def authorize
     # 認証用の情報を格納
     auth = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open(CLIENT_SECRET_PATH), # 認証用のキー
+      json_key_io: File.open(CLIENT_SECRET_PATH), # 認証用のキーを読み込む
       scope:       Google::Apis::CalendarV3::AUTH_CALENDAR
     )
     # アクセストークンを取得
@@ -60,11 +60,11 @@ class GoogleEventCalendar
   def create
     # 登録したいイベントをbuild
     event = build_google_calender_event(
-      'TechCommit勉強会', # summary(タイトル)
-      'GCPについてのハンズオン', # description(説明文),
-      '渋谷', # location(開催場所)
+      'TechCommit勉強会',             # summary(タイトル)
+      'GCPについてのハンズオン',         # description(説明文),
+      '渋谷',                         # location(開催場所)
       DateTime.new(2022, 2, 13, 16), # start_time（開始時間）
-      DateTime.new(2022, 2, 13, 18) # end_time（終了時間）
+      DateTime.new(2022, 2, 13, 18)  # end_time（終了時間）
     )
     # Googleカレンダーに、イベント作成のリクエスト
     response =  @client.insert_event(
@@ -88,17 +88,17 @@ class GoogleEventCalendar
   # 指定したイベントを更新
   def update(google_event_id)
     event = build_google_calender_event(
-      'GoogleCloudAPI入門勉強会', # summary(タイトル)
+      'GoogleCloudAPI入門勉強会',               # summary(タイトル)
       'WebAPIでGoogleカレンダーを操作してみよう！', # description(説明文),
-      'オンライン', # location(開催場所)
-      DateTime.new(2022, 2, 24, 12),
-      DateTime.new(2022, 2, 24, 15)
+      'オンライン',                             # location(開催場所)
+      DateTime.new(2022, 2, 24, 12),          # start_time（開始時間）
+      DateTime.new(2022, 2, 24, 15)           # end_time（終了時間）
     )
     # Googleカレンダーに、イベント更新のリクエスト
     response =  @client.update_event(
       @google_calendar_id,  # calendarID
-      google_event_id, # 編集したいeventのID
-      event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
+      google_event_id,      # 更新したいeventのID
+      event                 # 更新したいイベント
     )
   end
 
@@ -111,7 +111,8 @@ class GoogleEventCalendar
   end
 end
 
-# 更新したいEventIDを設定してください。EventIDはreadメソッドを呼ぶと確認できます。
+# 更新したいEventIDを設定してください。
+# 登録したイベントのイベントIDはreadメソッドを呼ぶと確認できます。
 google_event_id = 'xxxxxxxxxxxxxxxxxxxx'
 
 GoogleEventCalendar.new.create
