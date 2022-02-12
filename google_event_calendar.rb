@@ -34,14 +34,14 @@ class GoogleEventCalendar
   # カレンダー登録に必要な情報のインスタンスをbuild
   def build_google_calender_event(summary, description, location, start_time, end_time)
     Google::Apis::CalendarV3::Event.new({
-        summary: summary,
-        description: description,
-        location: location,
+        summary: summary,         # タイトル（※必須）
+        description: description, # 説明文
+        location: location,       # 開催場所
         start: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: start_time
+          date_time: start_time   # 開始時間
         ),
         end: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: end_time
+          date_time: end_time     # 終了時間
         )
       }
     )
@@ -61,15 +61,15 @@ class GoogleEventCalendar
     # 登録したいイベントをbuild
     event = build_google_calender_event(
       'TechCommit勉強会',             # summary(タイトル)
-      'GCPについてのハンズオン',         # description(説明文),
+      'GCPについてのハンズオン',         # description(説明文)
       '渋谷',                         # location(開催場所)
       DateTime.new(2022, 2, 13, 16), # start_time（開始時間）
       DateTime.new(2022, 2, 13, 18)  # end_time（終了時間）
     )
     # Googleカレンダーに、イベント作成のリクエスト
     response =  @client.insert_event(
-      @google_calendar_id,  # calendarID
-      event # 挿入したいイベント(Google::Apis::CalendarV3::Event)
+      @google_calendar_id,  # カレンダーID
+      event                 # 登録したいイベント
     )
   end
 
@@ -96,7 +96,7 @@ class GoogleEventCalendar
     )
     # Googleカレンダーに、イベント更新のリクエスト
     response =  @client.update_event(
-      @google_calendar_id,  # calendarID
+      @google_calendar_id,  # カレンダーID
       google_event_id,      # 更新したいeventのID
       event                 # 更新したいイベント
     )
